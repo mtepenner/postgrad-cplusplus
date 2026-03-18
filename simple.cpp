@@ -1,4 +1,12 @@
 #include <iostream>
+#include <vector>
+#include <string>
+#include <memory>
+#include <chrono>
+#include <functional>
+#include <exception>
+#include <algorithm>
+#include <map>
 
 using namespace std;
 
@@ -17,6 +25,39 @@ void for_range(T start, T end, Func action) {
     for (T i = start; i < end; ++i) {
         action(i);
     }
+}
+
+template <typename Func>
+void benchmark(const std::string& name, Func action) {
+    auto start = std::chrono::high_resolution_clock::now();
+    action();
+    auto end = std::chrono::high_resolution_clock::now();
+    
+    std::chrono::duration<double, std::milli> elapsed = end - start;
+    std::cout << "[Timer] " << name << " took: " << elapsed.count() << " ms" << std::endl;
+}
+
+template <typename Setup, typename Teardown, typename Action>
+void with_resource(Setup setup, Teardown teardown, Action action) {
+    setup();
+    try {
+        action();
+    } catch (...) {
+        teardown(); // Ensure cleanup even if an error occurs
+        throw;
+    }
+    teardown();
+}
+
+template <typename In, typename Out>
+auto memoize(Out (*func)(In)) {
+    return [func](In input) {
+        static std::map<In, Out> cache;
+        if (cache.find(input) == cache.end()) {
+            cache[input] = func(input);
+        }
+        return cache[input];
+    };
 }
 
 template <typename Func>
