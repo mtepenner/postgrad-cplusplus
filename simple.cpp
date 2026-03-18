@@ -13,12 +13,9 @@ using namespace std;
 
 template <typename... Args>
 void print(Args&&... args) {
-    // Fold expression (C++17) to print all arguments separated by spaces
     (std::cout << ... << args) << std::endl;
 }
 
-// Usage:
-// log("The result is: ", 42, " (Hex: ", 0x2A, ")");
 
 template <typename T, typename Func>
 void for_range(T start, T end, Func action) {
@@ -43,7 +40,7 @@ void with_resource(Setup setup, Teardown teardown, Action action) {
     try {
         action();
     } catch (...) {
-        teardown(); // Ensure cleanup even if an error occurs
+        teardown(); 
         throw;
     }
     teardown();
