@@ -1,6 +1,6 @@
-## Postgrad C++ Toolset
+## C++ Toolset
 
-Welcome to the Postgrad C++ Toolset. This repository features two standalone C++ applications/libraries designed to showcase system-level file manipulation, third-party API integration, and modern, functional C++ template metaprogramming.
+Welcome to the C++ Toolset. This repository features two standalone C++ applications/libraries designed to showcase system-level file manipulation, third-party API integration, and modern, functional C++ template metaprogramming.
 
 ### Table of Contents
 
